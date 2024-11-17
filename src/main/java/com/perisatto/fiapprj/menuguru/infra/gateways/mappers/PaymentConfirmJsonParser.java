@@ -1,4 +1,4 @@
-package com.perisatto.fiapprj.menuguru.infra.gateways;
+package com.perisatto.fiapprj.menuguru.infra.gateways.mappers;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;

@@ -28,7 +28,7 @@ import com.perisatto.fiapprj.menuguru.infra.controllers.dtos.GetOrderPraparation
 import com.perisatto.fiapprj.menuguru.infra.controllers.dtos.GetOrderResponseDTO;
 import com.perisatto.fiapprj.menuguru.infra.controllers.dtos.OrderItemDTO;
 import com.perisatto.fiapprj.menuguru.infra.controllers.dtos.UpdateOrderRequestDTO;
-import com.perisatto.fiapprj.menuguru.infra.gateways.PaymentConfirmJsonParser;
+import com.perisatto.fiapprj.menuguru.infra.gateways.mappers.PaymentConfirmJsonParser;
 
 
 @RestController
