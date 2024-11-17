@@ -6,7 +6,7 @@ import org.springframework.test.context.ActiveProfiles;
 
 @SpringBootTest
 @ActiveProfiles(value = "test")
-class MenuguruApplicationTests {
+class MenuguruOrderApplicationTests {
 
 	@Test
 	void contextLoads() {		
