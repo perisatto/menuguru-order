@@ -7,6 +7,7 @@ import org.modelmapper.ModelMapper;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.perisatto.fiapprj.menuguru.domain.entities.customer.Customer;
+import com.perisatto.fiapprj.menuguru.infra.gateways.dtos.GetCustomerResponseDTO;
 
 public class GetCustomerListResponseDTO {
 	

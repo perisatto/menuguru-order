@@ -1,4 +1,4 @@
-package com.perisatto.fiapprj.menuguru.infra.controllers.dtos;
+package com.perisatto.fiapprj.menuguru.infra.gateways.dtos;
 
 public class GetCustomerResponseDTO {
 	private Integer id;

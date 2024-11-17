@@ -48,37 +48,6 @@ public class OrderUseCaseTest {
 				throw new NotFoundException("tst-0000", "Customer not found");
 			}
 		}
-
-		@Override
-		public Customer createCustomer(Customer customer) throws Exception {
-			// TODO Auto-generated method stub
-			return null;
-		}
-
-		@Override
-		public Optional<Customer> getCustomerByCPF(CPF customerDocument) throws Exception {
-			// TODO Auto-generated method stub
-			return null;
-		}
-
-		@Override
-		public Optional<Customer> updateCustomer(Customer customer) throws Exception {
-			// TODO Auto-generated method stub
-			return null;
-		}
-
-		@Override
-		public Boolean deleteCustomer(Long customerId) throws Exception {
-			// TODO Auto-generated method stub
-			return null;
-		}
-
-		@Override
-		public Set<Customer> findAll(Integer limit, Integer offset) throws Exception {
-			// TODO Auto-generated method stub
-			return null;
-		}
-
 	};
 	private ProductRepository orderProductPort = new ProductRepository() {
 

@@ -33,27 +33,5 @@ spring:
     userId: ${PAYMENT_USER_ID}
     accessToken: ${PAYMENT_ACCESS_TOKEN}    
     hostWebhook: ${PAYMENT_HOST_WEBHOOK}   
-  cognito:
-    userPoolId: ${AWS_COGNITO_USER_POOL_ID}   
-       
----        
-spring:
-  config:
-    activate:      on-profile:      - test
-  sql:
-    init:      mode: always
-  datasource: 
-    url: jdbc:h2:mem:testdb
-    driverClassName: org.h2.Driver
-    username: sa
-    password:
-  jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
-    hibernate:
-      ddl-auto: none      
-  payment:
-    userId: ${PAYMENT_USER_ID}
-    accessToken: ${PAYMENT_ACCESS_TOKEN}   
-    hostWebhook: ${PAYMENT_HOST_WEBHOOK}  
-  cognito:
-    userPoolId: ${AWS_COGNITO_USER_POOL_ID}     
+  customer:
+    serviceUrl: ${MENUGURU_CUSTOMER_SERVICE_URL}   
