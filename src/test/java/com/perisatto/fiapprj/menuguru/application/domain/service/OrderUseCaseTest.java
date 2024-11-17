@@ -64,31 +64,6 @@ public class OrderUseCaseTest {
 			product.setId(1L);
 			return Optional.of(product);
 		}
-
-		@Override
-		public Product createProduct(Product product) throws Exception {
-			// TODO Auto-generated method stub
-			return null;
-		}
-
-		@Override
-		public Optional<Product> updateProduct(Product product) throws Exception {
-			// TODO Auto-generated method stub
-			return null;
-		}
-
-		@Override
-		public Boolean deleteProduct(Long id) throws Exception {
-			// TODO Auto-generated method stub
-			return null;
-		}
-
-		@Override
-		public Set<Product> findAll(Integer limit, Integer offset, String type) throws Exception {
-			// TODO Auto-generated method stub
-			return null;
-		}
-
 	};
 	private OrderRepository manageOrderPort = new OrderRepository() {
 

@@ -16,9 +16,9 @@ public class CustomerConfig {
 	private Environment env;
 	
 	@Bean
-	CustomerRepositoyApi customerRepositoyApi(){
+	CustomerRepositoyApi customerRepositoyApi(CustomerMapper customerMapper){
 		RestTemplateBuilder restTemplateBuilder = new RestTemplateBuilder(); 
-		return new CustomerRepositoyApi(restTemplateBuilder, this.env, this.customerMapper());
+		return new CustomerRepositoyApi(restTemplateBuilder, this.env, customerMapper);
 	}
 	
 	@Bean

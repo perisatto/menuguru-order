@@ -7,6 +7,7 @@ import org.modelmapper.ModelMapper;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.perisatto.fiapprj.menuguru.domain.entities.product.Product;
+import com.perisatto.fiapprj.menuguru.infra.gateways.dtos.GetProductResponseDTO;
 
 
 public class GetProductListResponseDTO {
