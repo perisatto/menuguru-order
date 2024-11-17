@@ -1,7 +1,6 @@
 package com.perisatto.fiapprj.menuguru_order.application.interfaces;
 
 import java.util.Optional;
-import java.util.Set;
 
 import com.perisatto.fiapprj.menuguru_order.domain.entities.product.Product;
 

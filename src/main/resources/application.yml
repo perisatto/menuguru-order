@@ -1,12 +1,13 @@
 spring:
   application:
-    name: menuguru
+    name: menuguru-order
   profiles:
     default: docker
   jackson:
     deserialization:
       fail-on-unknown-properties: true     
 server:
+  port: 8082
   servlet:
     context-path: "/menuguru-orders/v1"      
 ---
@@ -18,7 +19,7 @@ spring:
   
   datasource:
     driverClassName: com.mysql.cj.jdbc.Driver  
-    url: jdbc:mysql://${MYSQL_URL}/menuguru
+    url: jdbc:mysql://${MYSQL_URL}/menuguru-order
     username: ${MYSQL_USER}
     password: ${MYSQL_PASSWORD}
   data:
@@ -34,4 +35,6 @@ spring:
     accessToken: ${PAYMENT_ACCESS_TOKEN}    
     hostWebhook: ${PAYMENT_HOST_WEBHOOK}   
   customer:
-    serviceUrl: ${MENUGURU_CUSTOMER_SERVICE_URL}   
+    serviceUrl: ${MENUGURU_CUSTOMER_SERVICE_URL}
+  product:
+    serviceUrl: ${MENUGURU_PRODUCT_SERVICE_URL}

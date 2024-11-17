@@ -6,8 +6,10 @@ import java.util.Optional;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestClient;
 
 import com.perisatto.fiapprj.menuguru_order.application.interfaces.ProductRepository;
@@ -16,7 +18,7 @@ import com.perisatto.fiapprj.menuguru_order.infra.gateways.dtos.GetProductRespon
 import com.perisatto.fiapprj.menuguru_order.infra.gateways.mappers.ProductMapper;
 
 public class ProductRepositoryApi implements ProductRepository {
-	
+
 	private final RestClient restClient;
 	private final Environment env;
 	private final ProductMapper productMapper;
@@ -28,21 +30,29 @@ public class ProductRepositoryApi implements ProductRepository {
 	}
 
 	@Override
-	public Optional<Product> getProductById(Long id) throws Exception {
+	public Optional<Product> getProductById(Long productId) throws Exception {
 		Product product;
 
-		String url = env.getProperty("spring.product.serviceUrl");
-		ResponseEntity<GetProductResponseDTO> response = restClient.get()
-                .uri(URI.create(url))
-                .accept(MediaType.APPLICATION_JSON)
-                .retrieve().toEntity(GetProductResponseDTO.class);
-		
-		if(response.getStatusCode() == HttpStatus.OK) {
-			product = productMapper.mapToDomainEntity(response.getBody());
-		}else {
-			return Optional.empty();
-		}
+		try {
+			String url = env.getProperty("spring.product.serviceUrl") + "/menuguru-products/v1/products/" + productId;
+			ResponseEntity<GetProductResponseDTO> response = restClient.get()
+					.uri(URI.create(url))
+					.accept(MediaType.APPLICATION_JSON)
+					.retrieve().toEntity(GetProductResponseDTO.class);
 
-		return Optional.of(product);
+			if(response.getStatusCode() == HttpStatus.OK) {
+				product = productMapper.mapToDomainEntity(response.getBody());
+				return Optional.of(product);
+			}
+		}catch (HttpClientErrorException e) {
+			HttpStatusCode status = e.getStatusCode();
+			if(status.value() == 404) {
+				return Optional.empty();
+			} else {
+				throw e;
+			}
+		}
+		
+		return null;
 	}
 }
