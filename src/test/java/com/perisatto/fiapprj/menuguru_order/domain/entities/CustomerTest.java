@@ -1,4 +1,4 @@
-package com.perisatto.fiapprj.menuguru_order.application.domain.model;
+package com.perisatto.fiapprj.menuguru_order.domain.entities;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
