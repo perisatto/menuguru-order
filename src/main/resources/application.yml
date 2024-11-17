@@ -8,7 +8,7 @@ spring:
       fail-on-unknown-properties: true     
 server:
   servlet:
-    context-path: "/menuguru/v1"      
+    context-path: "/menuguru-orders/v1"      
 ---
 spring:
   config:
