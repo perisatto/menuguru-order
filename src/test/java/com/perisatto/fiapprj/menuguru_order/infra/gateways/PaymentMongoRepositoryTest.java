@@ -1,4 +1,4 @@
-package com.perisatto.fiapprj.menuguru_order.infra;
+package com.perisatto.fiapprj.menuguru_order.infra.gateways;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;

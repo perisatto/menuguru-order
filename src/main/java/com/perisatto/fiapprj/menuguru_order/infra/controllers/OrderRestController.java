@@ -101,7 +101,7 @@ public class OrderRestController {
 	}
 	
 	@PostMapping(value = "/orders/{orderId}/cancel")
-	public ResponseEntity<Object> checkoutOrder(@PathVariable(value = "orderId") Long orderId) throws Exception {
+	public ResponseEntity<Object> cancelOrder(@PathVariable(value = "orderId") Long orderId) throws Exception {
 		requestProperties.setProperty("resourcePath", "/orders/" + orderId +"/cancel");
 		orderUseCase.cancelOrder(orderId);
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
