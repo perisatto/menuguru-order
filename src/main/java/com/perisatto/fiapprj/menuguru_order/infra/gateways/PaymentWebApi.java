@@ -9,7 +9,6 @@ import java.util.TimeZone;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -66,7 +65,7 @@ public class PaymentWebApi implements PaymentProcessor {
 		request.setTitle("Pagamento Menuguru");
 		request.setTotalAmount(payment.getOrder().getTotalPrice());
 		
-		String url = "https://api.mercadopago.com/instore/orders/qr/seller/collectors/" + env.getProperty("spring.payment.userId") + "/pos/SUC001POS001/qrs";
+		String url = env.getProperty("spring.payment.host") + "/instore/orders/qr/seller/collectors/" + env.getProperty("spring.payment.userId") + "/pos/SUC001POS001/qrs";
 		ResponseEntity<ResponseQrCodeDTO> response = restClient.post()
 				                               .uri(URI.create(url))
 				                               .contentType(MediaType.APPLICATION_JSON)
