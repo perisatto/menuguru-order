@@ -3,13 +3,13 @@ package com.perisatto.fiapprj.menuguru_order.infra.gateways;
 import java.net.URI;
 import java.util.Optional;
 
-import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestClient;
 
 import com.perisatto.fiapprj.menuguru_order.application.interfaces.CustomerRepository;
@@ -24,7 +24,7 @@ public class CustomerRepositoyApi implements CustomerRepository {
 	private final Environment env;
 	private final CustomerMapper customerMapper;
 
-	public CustomerRepositoyApi(RestTemplateBuilder restTemplateBuilder, Environment env, CustomerMapper customerMapper) {
+	public CustomerRepositoyApi(Environment env, CustomerMapper customerMapper) {
 		this.restClient = RestClient.create();
 		this.env = env;
 		this.customerMapper = customerMapper;
@@ -45,7 +45,7 @@ public class CustomerRepositoyApi implements CustomerRepository {
 				return Optional.of(customer);
 			}
 
-		}catch (HttpClientErrorException e) {
+		} catch (HttpClientErrorException | HttpServerErrorException e) {
 			HttpStatusCode status = e.getStatusCode();
 			if(status.value() == 404) {
 				return Optional.empty();

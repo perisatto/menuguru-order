@@ -32,7 +32,7 @@ public class PaymentWebApi implements PaymentProcessor {
 	private final RestClient restClient;
 	private final Environment env;
 	
-	public PaymentWebApi(RestTemplateBuilder restTemplateBuilder, Environment env) {
+	public PaymentWebApi(Environment env) {
 		this.restClient = RestClient.create();
 		this.env = env;
 	}
