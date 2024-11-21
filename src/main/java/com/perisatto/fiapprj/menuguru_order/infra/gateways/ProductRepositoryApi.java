@@ -3,13 +3,13 @@ package com.perisatto.fiapprj.menuguru_order.infra.gateways;
 import java.net.URI;
 import java.util.Optional;
 
-import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestClient;
 
 import com.perisatto.fiapprj.menuguru_order.application.interfaces.ProductRepository;
@@ -23,7 +23,7 @@ public class ProductRepositoryApi implements ProductRepository {
 	private final Environment env;
 	private final ProductMapper productMapper;
 
-	public ProductRepositoryApi(RestTemplateBuilder restTemplateBuilder, Environment env, ProductMapper productMapper) {
+	public ProductRepositoryApi(Environment env, ProductMapper productMapper) {
 		this.restClient = RestClient.create();
 		this.env = env;
 		this.productMapper = productMapper;
@@ -44,7 +44,7 @@ public class ProductRepositoryApi implements ProductRepository {
 				product = productMapper.mapToDomainEntity(response.getBody());
 				return Optional.of(product);
 			}
-		}catch (HttpClientErrorException e) {
+		}catch (HttpClientErrorException | HttpServerErrorException e) {
 			HttpStatusCode status = e.getStatusCode();
 			if(status.value() == 404) {
 				return Optional.empty();

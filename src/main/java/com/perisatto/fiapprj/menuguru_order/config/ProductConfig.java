@@ -1,7 +1,6 @@
 package com.perisatto.fiapprj.menuguru_order.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
@@ -16,9 +15,8 @@ public class ProductConfig {
 	private Environment env;
 	
 	@Bean
-	ProductRepositoryApi productApiRepository(ProductMapper productMapper) {
-		RestTemplateBuilder restTemplateBuilder = new RestTemplateBuilder(); 
-		return new ProductRepositoryApi(restTemplateBuilder, this.env ,productMapper);
+	ProductRepositoryApi productApiRepository(ProductMapper productMapper) { 
+		return new ProductRepositoryApi(this.env ,productMapper);
 	}
 	
 	@Bean
