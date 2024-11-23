@@ -1,92 +1,97 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: menuguru-deployment
+  name: menuguru-order-deployment
   labels:
-    menuguru.fiapprj.perisatto.com/name: service
+    menuguru.fiapprj.perisatto.com/name: order-service
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
   selector:
     matchLabels:
-      menuguru.fiapprj.perisatto.com/name: service
+      menuguru.fiapprj.perisatto.com/name: order-service
   template:
     metadata:
-      name: menuguru-deployment
+      name: menuguru-order-deployment
       labels:
-        menuguru.fiapprj.perisatto.com/name: service
+        menuguru.fiapprj.perisatto.com/name: order-service
     spec:           
       containers:
         - name: menuguru-service
-          image: rperisatto/menuguru-api_service:{{ .Values.image.tag }}
+          image: rperisatto/menuguru-order:{{ .Values.image.tag }}
           env:
             - name: MYSQL_URL
               valueFrom:
                 configMapKeyRef:
-                  name: menuguru-api-config
+                  name: menuguru-order-config
                   key: mysql_url
             - name: MYSQL_USER
               valueFrom:
                 secretKeyRef:
-                  name: menuguru-secret
+                  name: menuguru-order-secret
                   key: mysql_user      
             - name: MYSQL_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: menuguru-secret
+                  name: menuguru-order-secret
                   key: mysql_password
             - name: PAYMENT_USER_ID
               valueFrom:
                 secretKeyRef:
-                  name: menuguru-secret
+                  name: menuguru--order-secret
                   key: payment_user_id
             - name: PAYMENT_ACCESS_TOKEN
               valueFrom:
                 secretKeyRef:
-                  name: menuguru-secret
-                  key: payment_access_token                  
+                  name: menuguru-order-secret
+                  key: payment_access_token
+            - name: PAYMENT_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: menuguru-order-config
+                  key: payment_host
             - name: PAYMENT_HOST_WEBHOOK
               valueFrom:
                 configMapKeyRef:
-                  name: menuguru-api-config
+                  name: menuguru-order-config
                   key: payment_host_webhook
-            - name: AWS_COGNITO_USER_POOL_ID
-              valueFrom:
-                secretKeyRef:
-                  name: menuguru-secret
-                  key: aws_cognito_user_pool_id
-            - name: AWS_REGION
-              valueFrom:
-                configMapKeyRef:
-                  name: menuguru-api-config
-                  key: aws_region          
             - name: MONGODB_URL
               valueFrom:
                 configMapKeyRef:
-                  name: menuguru-api-config
+                  name: menuguru-order-config
                   key: mongodb_url
             - name: MONGODB_USER
               valueFrom:
                 secretKeyRef:
-                  name: menuguru-secret
+                  name: menuguru-order-secret
                   key: mongodb_user      
             - name: MONGODB_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: menuguru-secret
-                  key: mongodb_password                          
+                  name: menuguru-order-secret
+                  key: mongodb_password 
+            - name: MENUGURU_CUSTOMER_SERVICE_URL
+                valueFrom:
+                  configMapKeyRef:
+                    name: menuguru-order-config
+                    key: customer_service_host
+            - name: PRODUCT_CUSTOMER_SERVICE_URL
+                valueFrom:
+                  configMapKeyRef:
+                    name: menuguru-order-config
+                    key: product_service_host					                         
           ports:
             - containerPort: 8080      
           readinessProbe:
             httpGet:
-              path: /menuguru/v1/actuator/health
+              path: /menuguru-orders/v1/actuator/health
               port: 8080
             initialDelaySeconds: 30
             periodSeconds: 10
           livenessProbe:
             httpGet:
-              path: /menuguru/v1/actuator/health
+              path: /menuguru-orders/v1/actuator/health
               port: 8080
             initialDelaySeconds: 30
             periodSeconds: 60

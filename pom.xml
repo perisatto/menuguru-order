@@ -11,7 +11,7 @@
 	</parent>
 	<groupId>com.perisatto.fiapprj</groupId>
 	<artifactId>menuguru-order</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<name>menuguru-order</name>
 	<description>Restaurant orders management system for FIAP Tech Challenge (post graduate course test)</description>
 	<properties>

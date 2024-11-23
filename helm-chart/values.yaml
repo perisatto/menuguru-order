@@ -2,7 +2,7 @@
 replicaCount: 1
 
 image:
-  tag: "latest"
+  tag: "${VERSION}"
 
 service:
   #Para executar de forma local, altere o "type" para "NodePort"
@@ -28,6 +28,7 @@ mysql_password: ${MYSQL_PASSWORD}
 payment_userId: ${PAYMENT_USER_ID}
 payment_accessToken: ${PAYMENT_ACCESS_TOKEN}
 payment_hostWebhook: ${PAYMENT_WEBHOOK}
+payment_host: ${PAYMENT_HOST}
 aws_cognito_user_pool_id: ${AWS_COGNITO_USER_POOL_ID64}
 aws_region: ${AWS_REGION}
 
@@ -35,3 +36,9 @@ aws_region: ${AWS_REGION}
 mongodb_user: ${MONGODB_USER}
 mongodb_password: ${MONGODB_PASSWORD}
 mongodb_url: ${MONGODB_URL}
+
+#Configurações do serviço Customers
+customer_service_host: ${MENUGURU_CUSTOMER_SERVICE_URL}
+
+#Configurações do serviço Products
+product_service_host: ${PRODUCT_CUSTOMER_SERVICE_URL}

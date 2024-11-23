@@ -1,9 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: menuguru-api-config
-data:
-  mysql_url: {{ .Values.mysqlUrl }}:{{ .Values.mysqlPort }}
-  payment_host_webhook: {{ .Values.payment_hostWebhook }}
-  aws_region: {{ .Values.aws_region }}
-  mongodb_url: {{ .Values.mongodb_url }}  

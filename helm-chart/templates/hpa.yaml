@@ -2,7 +2,7 @@
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: menuguru-deployment
+  name: menuguru-order-deployment
   labels:
     menuguru.fiapprj.perisatto.com/name: service
 spec:
