@@ -1,6 +1,8 @@
 package com.perisatto.fiapprj.menuguru_order.infra.gateways;
 
 import java.net.URI;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.LinkedHashSet;
@@ -64,8 +66,9 @@ public class PaymentWebApi implements PaymentProcessor {
 		request.setNotificationUrl(env.getProperty("spring.payment.hostWebhook") + env.getProperty("server.servlet.context-path") + "/orders/" + payment.getOrder().getId().toString() + "/confirmPayment");
 		request.setTitle("Pagamento Menuguru");
 		request.setTotalAmount(payment.getOrder().getTotalPrice());
-
-		String url = env.getProperty("spring.payment.host") + "/instore/orders/qr/seller/collectors/" + env.getProperty("spring.payment.userId") + "/pos/SUC001POS001/qrs";
+		
+		String encodedUserId = URLEncoder.encode(env.getProperty("spring.payment.userId"), StandardCharsets.UTF_8);
+		String url = env.getProperty("spring.payment.host") + "/instore/orders/qr/seller/collectors/" + encodedUserId + "/pos/SUC001POS001/qrs";		
 		ResponseEntity<ResponseQrCodeDTO> response = restClient.post()
 				.uri(URI.create(url))
 				.contentType(MediaType.APPLICATION_JSON)
