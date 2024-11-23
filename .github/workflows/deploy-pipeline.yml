@@ -51,7 +51,7 @@ jobs:
 		run: |
 		  REPO_NAME=${GITHUB_REPOSITORY#*/}		
 		  helm upgrade --install $REPO_NAME --set image.tag=$VERSION --set mysqlUrl=$MYSQL_URL --set mysqlPort=$MYSQL_PORT --set mysql_user=$MYSQL_USER \
-		  --set mysql_password=$MYSQL_PASSWORD --set payment_userId=$PAYMENT_USER_ID --set payment_accessToken=$PAYMENT_ACCESS_TOKEN \ 
+		  --set mysql_password=$MYSQL_PASSWORD --set payment_userId=$PAYMENT_USER_ID --set payment_accessToken=$PAYMENT_ACCESS_TOKEN \
 		  --set payment_host=$PAYMENT_HOST --set payment_hostWebhook=$PAYMENT_WEBHOOK --set mongodb_user=$MONGODB_USER \
 		  --set mongodb_password=$MONGODB_PASSWORD --set mongodb_url=$MONGODB_URL --set customer_service_host=$MENUGURU_CUSTOMER_SERVICE_URL \
 		  --set product_service_host=$MENUGURU_PRODUCT_SERVICE_URL ./helm-chart
