@@ -76,7 +76,7 @@ spec:
                   configMapKeyRef:
                     name: menuguru-order-config
                     key: customer_service_host
-            - name: PRODUCT_CUSTOMER_SERVICE_URL
+            - name: MENUGURU_PRODUCT_SERVICE_URL
               valueFrom:
                   configMapKeyRef:
                     name: menuguru-order-config
