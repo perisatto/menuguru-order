@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: menuguru-api-svc
+  name: menuguru-order-svc
   {{ if eq .Values.service.type "LoadBalancer" }}
   {{ if eq .Values.service.cloud "aws" }}
   annotations: 
@@ -10,7 +10,7 @@ metadata:
   {{ end }}      
 spec:
   selector:
-    menuguru.fiapprj.perisatto.com/name: service 
+    menuguru.fiapprj.perisatto.com/name: order-service 
   type: {{ .Values.service.type }}
   ports:
     - protocol: TCP

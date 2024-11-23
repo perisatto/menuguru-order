@@ -1,7 +1,11 @@
 name: deploy-pipeline
 run-name: ${{ github.actor }} is running a new build.
 
-on: [workflow_dispatch]
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Service version wanted to deploy (a.k.a Image Tag)'
 
 jobs:       
   Deploy:
@@ -39,7 +43,9 @@ jobs:
         run: |
           curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
 
-      - name: Deploy to EKS using Helm        
+      - name: Deploy to EKS using Helm  
+        env:
+          VERSION: '${{github.event.inputs.version}}'            
         run: |
           helm upgrade --install skull --set mysqlUrl=$MYSQL_URL --set mysqlPort=$MYSQL_PORT --set mysql_user=$MYSQL_USER --set mysql_password=$MYSQL_PASSWORD \
           --set payment_userId=$PAYMENT_USER_ID --set payment_accessToken=$PAYMENT_ACCESS_TOKEN --set payment_hostWebhook=$PAYMENT_WEBHOOK \
