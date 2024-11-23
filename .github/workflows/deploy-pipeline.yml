@@ -11,7 +11,7 @@ jobs:
   Deploy:
     runs-on: ubuntu-latest
     env:    
-	  MYSQL_URL: '${{secrets.MYSQL_URL}}'
+      MYSQL_URL: '${{secrets.MYSQL_URL}}'
 	  MYSQL_PORT: '${{secrets.MYSQL_PORT}}'
 	  MYSQL_USER: '${{secrets.MYSQL_USER}}'
 	  MYSQL_PASSWORD: '${{secrets.MYSQL_PASSWORD}}'
