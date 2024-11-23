@@ -47,7 +47,6 @@ jobs:
       - name: Deploy to EKS using Helm  
         env:
           VERSION: '${{github.event.inputs.version}}'            
-        run: |
 		run: |
 		  REPO_NAME=${GITHUB_REPOSITORY#*/}		
 		  helm upgrade --install $REPO_NAME --set image.tag=$VERSION --set mysqlUrl=$MYSQL_URL --set mysqlPort=$MYSQL_PORT --set mysql_user=$MYSQL_USER \
