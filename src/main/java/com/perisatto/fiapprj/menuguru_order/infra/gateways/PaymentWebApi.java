@@ -15,12 +15,13 @@ import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestClient;
 
 import com.perisatto.fiapprj.menuguru_order.application.interfaces.PaymentProcessor;
 import com.perisatto.fiapprj.menuguru_order.domain.entities.order.OrderItem;
 import com.perisatto.fiapprj.menuguru_order.domain.entities.payment.Payment;
-import com.perisatto.fiapprj.menuguru_order.handler.exceptions.ValidationException;
 import com.perisatto.fiapprj.menuguru_order.infra.gateways.dtos.RequestQrCodeDTO;
 import com.perisatto.fiapprj.menuguru_order.infra.gateways.dtos.RequestQrCodeItemDTO;
 import com.perisatto.fiapprj.menuguru_order.infra.gateways.dtos.ResponseQrCodeDTO;
@@ -66,29 +67,35 @@ public class PaymentWebApi implements PaymentProcessor {
 		request.setNotificationUrl(env.getProperty("spring.payment.hostWebhook") + env.getProperty("server.servlet.context-path") + "/orders/" + payment.getOrder().getId().toString() + "/confirmPayment");
 		request.setTitle("Pagamento Menuguru");
 		request.setTotalAmount(payment.getOrder().getTotalPrice());
-		
+
 		String encodedUserId = URLEncoder.encode(env.getProperty("spring.payment.userId"), StandardCharsets.UTF_8);
-		String url = env.getProperty("spring.payment.host") + "/instore/orders/qr/seller/collectors/" + encodedUserId + "/pos/SUC001POS001/qrs";		
-		ResponseEntity<ResponseQrCodeDTO> response = restClient.post()
-				.uri(URI.create(url))
-				.contentType(MediaType.APPLICATION_JSON)
-				.header("Authorization", env.getProperty("spring.payment.accessToken"))
-				.body(request)
-				.retrieve().toEntity(ResponseQrCodeDTO.class);
-		if(response.getStatusCode() != HttpStatus.CREATED) {
+		String url = env.getProperty("spring.payment.host") + "/instore/orders/qr/seller/collectors/" + encodedUserId + "/pos/SUC001POS001/qrs";
+
+		try {
+			ResponseEntity<ResponseQrCodeDTO> response = restClient.post()
+					.uri(URI.create(url))
+					.contentType(MediaType.APPLICATION_JSON)
+					.header("Authorization", env.getProperty("spring.payment.accessToken"))
+					.body(request)
+					.retrieve().toEntity(ResponseQrCodeDTO.class);
+			
+			if(response.getStatusCode() != HttpStatus.CREATED) {
+				logger.error("Payment URL: " + url);
+				logger.error("HTTP Status Code: " + response.getStatusCode());
+				//throw new ValidationException("pymt-1000", "Error during payment processes. Please refer to log application for details.");
+			}
+			
+			if(response != null ) {
+				payment.setPaymentLocation(response.getBody().getQrData());
+			}
+			
+		} catch (HttpClientErrorException | HttpServerErrorException e) {
+			logger.error("Error during payment processes");
 			logger.error("Payment URL: " + url);
-			logger.error("HTTP Status Code: " + response.getStatusCode());
-			throw new ValidationException("pymt-1000", "Error during payment processes. Please refer to log application for details.");
+			logger.error("HTTP Status Code: " + e.getStatusCode());
+			logger.error("Response body: " + e.getResponseBodyAsString());
 		}
 
-		if(response.getBody() == null ) {
-			logger.error("Payment URL: " + url);
-			logger.error("HTTP Status Code: " + response.getStatusCode());
-			logger.error("Null response body");
-			throw new Exception("Error during payment processes. Please refer to log application for details.");
-		} else {
-			payment.setPaymentLocation(response.getBody().getQrData());
-		}
 		return payment;
 	}
 

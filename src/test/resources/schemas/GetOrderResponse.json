@@ -1,0 +1,50 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "number"
+    },
+    "customerId": {
+      "type": "number"
+    },
+    "totalPrice": {
+      "type": "number"
+    },
+    "status": {
+      "type": "string",
+      "minLength": 1
+    },
+    "items": {
+      "type": "array",
+      "uniqueItems": true,
+      "minItems": 1,
+      "items": {
+        "required": [
+          "id",
+          "actualPrice",
+          "quantity"
+        ],
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "actualPrice": {
+            "type": "number"
+          },
+          "quantity": {
+            "type": "number"
+          }
+        }
+      }
+    }
+  },
+  "required": [
+    "id",
+    "customerId",
+    "totalPrice",
+    "status",
+    "items"
+  ]
+}
