@@ -12,18 +12,18 @@ jobs:
     runs-on: ubuntu-latest
     env:    
       MYSQL_URL: '${{secrets.MYSQL_URL}}'
-	  MYSQL_PORT: '${{secrets.MYSQL_PORT}}'
-	  MYSQL_USER: '${{secrets.MYSQL_USER}}'
-	  MYSQL_PASSWORD: '${{secrets.MYSQL_PASSWORD}}'
-	  PAYMENT_USER_ID: '${{secrets.PAYMENT_USER_ID}}'
-	  PAYMENT_ACCESS_TOKEN: '${{secrets.PAYMENT_ACCESS_TOKEN}}'
-	  PAYMENT_WEBHOOK: '${{secrets.PAYMENT_WEBHOOK}}'
-	  PAYMENT_HOST: '${{secrets.PAYMENT_HOST}}'
-	  MONGODB_USER: '${{secrets.MONGODB_USER}}'
-	  MONGODB_PASSWORD: '${{secrets.MONGODB_PASSWORD}}'
-	  MONGODB_URL: '${{secrets.MONGODB_URL}}'
-	  MENUGURU_CUSTOMER_SERVICE_URL: '${{secrets.MENUGURU_CUSTOMER_SERVICE_URL}}'
-	  MENUGURU_PRODUCT_SERVICE_URL: '${{secrets.MENUGURU_PRODUCT_SERVICE_URL}}'  
+      MYSQL_PORT: '${{secrets.MYSQL_PORT}}'
+      MYSQL_USER: '${{secrets.MYSQL_USER}}'
+      MYSQL_PASSWORD: '${{secrets.MYSQL_PASSWORD}}'
+      PAYMENT_USER_ID: '${{secrets.PAYMENT_USER_ID}}'
+      PAYMENT_ACCESS_TOKEN: '${{secrets.PAYMENT_ACCESS_TOKEN}}'
+      PAYMENT_WEBHOOK: '${{secrets.PAYMENT_WEBHOOK}}'
+      PAYMENT_HOST: '${{secrets.PAYMENT_HOST}}'
+      MONGODB_USER: '${{secrets.MONGODB_USER}}'
+      MONGODB_PASSWORD: '${{secrets.MONGODB_PASSWORD}}'
+      MONGODB_URL: '${{secrets.MONGODB_URL}}'
+      MENUGURU_CUSTOMER_SERVICE_URL: '${{secrets.MENUGURU_CUSTOMER_SERVICE_URL}}'
+      MENUGURU_PRODUCT_SERVICE_URL: '${{secrets.MENUGURU_PRODUCT_SERVICE_URL}}'  
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
