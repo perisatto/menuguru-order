@@ -7,7 +7,6 @@ spring:
     deserialization:
       fail-on-unknown-properties: true     
 server:
-  port: 8080
   servlet:
     context-path: "/menuguru-orders/v1"      
 ---

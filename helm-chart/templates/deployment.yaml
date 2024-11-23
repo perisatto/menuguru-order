@@ -39,7 +39,7 @@ spec:
             - name: PAYMENT_USER_ID
               valueFrom:
                 secretKeyRef:
-                  name: menuguru--order-secret
+                  name: menuguru-order-secret
                   key: payment_user_id
             - name: PAYMENT_ACCESS_TOKEN
               valueFrom:
@@ -65,19 +65,19 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: menuguru-order-secret
-                  key: mongodb_user      
+                  key: mongodb_user
             - name: MONGODB_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: menuguru-order-secret
                   key: mongodb_password 
             - name: MENUGURU_CUSTOMER_SERVICE_URL
-                valueFrom:
+              valueFrom:
                   configMapKeyRef:
                     name: menuguru-order-config
                     key: customer_service_host
             - name: PRODUCT_CUSTOMER_SERVICE_URL
-                valueFrom:
+              valueFrom:
                   configMapKeyRef:
                     name: menuguru-order-config
                     key: product_service_host					                         
