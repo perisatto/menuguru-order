@@ -1,6 +1,6 @@
 spring:
   application:
-    name: menuguru
+    name: menuguru-order
   profiles:
     default: docker
   jackson:
@@ -8,7 +8,7 @@ spring:
       fail-on-unknown-properties: true     
 server:
   servlet:
-    context-path: "/menuguru/v1"      
+    context-path: "/menuguru-orders/v1"      
 ---
 spring:
   config:
@@ -18,7 +18,7 @@ spring:
   
   datasource:
     driverClassName: com.mysql.cj.jdbc.Driver  
-    url: jdbc:mysql://${MYSQL_URL}/menuguru
+    url: jdbc:mysql://${MYSQL_URL}/menuguru-order
     username: ${MYSQL_USER}
     password: ${MYSQL_PASSWORD}
   data:
@@ -30,30 +30,11 @@ spring:
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
   payment:
+    host: ${PAYMENT_HOST} 
     userId: ${PAYMENT_USER_ID}
     accessToken: ${PAYMENT_ACCESS_TOKEN}    
     hostWebhook: ${PAYMENT_HOST_WEBHOOK}   
-  cognito:
-    userPoolId: ${AWS_COGNITO_USER_POOL_ID}   
-       
----        
-spring:
-  config:
-    activate:      on-profile:      - test
-  sql:
-    init:      mode: always
-  datasource: 
-    url: jdbc:h2:mem:testdb
-    driverClassName: org.h2.Driver
-    username: sa
-    password:
-  jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
-    hibernate:
-      ddl-auto: none      
-  payment:
-    userId: ${PAYMENT_USER_ID}
-    accessToken: ${PAYMENT_ACCESS_TOKEN}   
-    hostWebhook: ${PAYMENT_HOST_WEBHOOK}  
-  cognito:
-    userPoolId: ${AWS_COGNITO_USER_POOL_ID}     
+  customer:
+    serviceUrl: ${MENUGURU_CUSTOMER_SERVICE_URL}
+  product:
+    serviceUrl: ${MENUGURU_PRODUCT_SERVICE_URL}

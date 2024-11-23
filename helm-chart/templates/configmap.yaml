@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: menuguru-order-config
+data:
+  mysql_url: {{ .Values.mysqlUrl }}:{{ .Values.mysqlPort }}
+  payment_host_webhook: {{ .Values.payment_hostWebhook }}
+  payment_host: {{ .Values.payment_host }}
+  aws_region: {{ .Values.aws_region }}
+  mongodb_url: {{ .Values.mongodb_url }}
+  customer_service_host: {{ .Values.customer_service_host }}
+  product_service_host: {{ .Values.product_service_host }}
