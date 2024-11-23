@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 
-import com.perisatto.fiapprj.menuguru_order.infra.gateways.CustomerRepositoyApi;
+import com.perisatto.fiapprj.menuguru_order.infra.gateways.CustomerRepositoryApi;
 import com.perisatto.fiapprj.menuguru_order.infra.gateways.mappers.CustomerMapper;
 
 @Configuration
@@ -15,8 +15,8 @@ public class CustomerConfig {
 	private Environment env;
 	
 	@Bean
-	CustomerRepositoyApi customerRepositoyApi(CustomerMapper customerMapper){ 
-		return new CustomerRepositoyApi(this.env, customerMapper);
+	CustomerRepositoryApi customerRepositoyApi(CustomerMapper customerMapper){ 
+		return new CustomerRepositoryApi(this.env, customerMapper);
 	}
 	
 	@Bean

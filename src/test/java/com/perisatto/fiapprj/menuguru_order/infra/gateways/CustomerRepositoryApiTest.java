@@ -26,7 +26,7 @@ import okhttp3.mockwebserver.MockWebServer;
 
 public class CustomerRepositoryApiTest {
 	
-	private CustomerRepositoyApi customerRepositoyApi;
+	private CustomerRepositoryApi customerRepositoyApi;
 	
 	public static MockWebServer mockBackEnd;
 	
@@ -41,7 +41,7 @@ public class CustomerRepositoryApiTest {
 	void setUp() throws IOException {
 		openMocks = MockitoAnnotations.openMocks(this);
 		customerMapper = new CustomerMapper();
-		customerRepositoyApi = new CustomerRepositoyApi(env, customerMapper);
+		customerRepositoyApi = new CustomerRepositoryApi(env, customerMapper);
         mockBackEnd = new MockWebServer();
         mockBackEnd.start();
   	}

@@ -17,14 +17,14 @@ import com.perisatto.fiapprj.menuguru_order.domain.entities.customer.Customer;
 import com.perisatto.fiapprj.menuguru_order.infra.gateways.dtos.GetCustomerResponseDTO;
 import com.perisatto.fiapprj.menuguru_order.infra.gateways.mappers.CustomerMapper;
 
-public class CustomerRepositoyApi implements CustomerRepository {
+public class CustomerRepositoryApi implements CustomerRepository {
 
 
 	private final RestClient restClient;
 	private final Environment env;
 	private final CustomerMapper customerMapper;
 
-	public CustomerRepositoyApi(Environment env, CustomerMapper customerMapper) {
+	public CustomerRepositoryApi(Environment env, CustomerMapper customerMapper) {
 		this.restClient = RestClient.create();
 		this.env = env;
 		this.customerMapper = customerMapper;
@@ -32,19 +32,15 @@ public class CustomerRepositoyApi implements CustomerRepository {
 
 	public Optional<Customer> getCustomerById(Long customerId) throws Exception{
 		Customer customer;
+		
+		ResponseEntity<GetCustomerResponseDTO> response;
 
 		String url = env.getProperty("spring.customer.serviceUrl") + "/menuguru-customers/v1/customers/" + customerId;
 		try {
-			ResponseEntity<GetCustomerResponseDTO> response = restClient.get()
+			response = restClient.get()
 					.uri(URI.create(url))
 					.accept(MediaType.APPLICATION_JSON)
 					.retrieve().toEntity(GetCustomerResponseDTO.class);
-
-			if(response.getStatusCode() == HttpStatus.OK) {
-				customer = customerMapper.mapToDomainEntity(response.getBody());
-				return Optional.of(customer);
-			}
-
 		} catch (HttpClientErrorException | HttpServerErrorException e) {
 			HttpStatusCode status = e.getStatusCode();
 			if(status.value() == 404) {
@@ -54,7 +50,13 @@ public class CustomerRepositoyApi implements CustomerRepository {
 			}
 		}
 		
-		return null;
+
+		if(response.getStatusCode() == HttpStatus.OK) {
+			customer = customerMapper.mapToDomainEntity(response.getBody());
+			return Optional.of(customer);
+		} else {
+			return Optional.empty();
+		}
 	}
 
 }

@@ -3,6 +3,7 @@ package com.perisatto.fiapprj.menuguru_order.infra.gateways;
 import java.net.URI;
 import java.util.Optional;
 
+import org.springframework.boot.autoconfigure.web.client.RestClientAutoConfiguration;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -32,18 +33,15 @@ public class ProductRepositoryApi implements ProductRepository {
 	@Override
 	public Optional<Product> getProductById(Long productId) throws Exception {
 		Product product;
+		
+		ResponseEntity<GetProductResponseDTO> response;
 
 		try {
 			String url = env.getProperty("spring.product.serviceUrl") + "/menuguru-products/v1/products/" + productId;
-			ResponseEntity<GetProductResponseDTO> response = restClient.get()
+			response = restClient.get()
 					.uri(URI.create(url))
 					.accept(MediaType.APPLICATION_JSON)
 					.retrieve().toEntity(GetProductResponseDTO.class);
-
-			if(response.getStatusCode() == HttpStatus.OK) {
-				product = productMapper.mapToDomainEntity(response.getBody());
-				return Optional.of(product);
-			}
 		}catch (HttpClientErrorException | HttpServerErrorException e) {
 			HttpStatusCode status = e.getStatusCode();
 			if(status.value() == 404) {
@@ -53,6 +51,11 @@ public class ProductRepositoryApi implements ProductRepository {
 			}
 		}
 		
-		return null;
+		if(response.getStatusCode() == HttpStatus.OK) {
+			product = productMapper.mapToDomainEntity(response.getBody());
+			return Optional.of(product);
+		} else {
+			return Optional.empty();
+		}
 	}
 }
